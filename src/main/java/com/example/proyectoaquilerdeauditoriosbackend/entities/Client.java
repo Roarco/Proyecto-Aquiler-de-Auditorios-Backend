@@ -6,22 +6,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
-/*
-Como usuario .
-
-Quiero ingresar los valores de nombre, correo, edad y contraseña.
-
-Para poder resgistrarse en el sistema.
-
-Criterios de aceptación:
-
-Los valores de correo y contraseña deben ser un texto de no más de 45 caracteres.
-
-Los valores de edad deben ser un número que represente los años.
-
-Los valores de nombre deben ser un texto de máximo 250 caracteres.
-*/
-
 @Entity
 @Table(name = "client")
 @Setter
