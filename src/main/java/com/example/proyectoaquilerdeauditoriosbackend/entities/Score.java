@@ -1,5 +1,6 @@
 package com.example.proyectoaquilerdeauditoriosbackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,6 +35,7 @@ public class Score {
 
     @ManyToOne
     @JoinColumn(name = "reservation")
+    @JsonIgnoreProperties("scores")
     private Reservation reservation;
 
 
