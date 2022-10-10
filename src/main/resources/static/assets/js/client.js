@@ -1,16 +1,14 @@
-const URL =
-    "https://g809461e5a992bc-pudgjcmoed3aisa4.adb.sa-vinhedo-1.oraclecloudapps.com/ords/admin/";
-const serviceClient = new ServiceClient();
+const URL = "http://localhost:8080/api/";
+const service = new Service();
 let action = "create";
 
 (async function () {
     try {
-        const data = await serviceClient.getall(URL);
+        const data = await service.getall(`${URL}Client/all`);
         const tbody = document.querySelector("tbody");
         data.forEach((element) => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
-            <th scope="row">${element.id}</th>
             <td>${element.name}</td>
             <td>${element.email}</td>
             <td>${element.age}</td>
@@ -28,18 +26,18 @@ let action = "create";
     }
 })();
 
-async function deleteClient(id) {
+/* async function deleteClient(id) {
     try {
-        const response = await serviceClient.delete(URL, id);
+        const response = await service.delete(URL, id);
         location.reload();
     } catch (error) {
         console.log(error);
     }
-}
+} */
 
-async function setFormClient(id) {
+/* async function setFormClient(id) {
     try {
-        const client = await serviceClient.getbyid(URL, id);
+        const client = await service.getbyid(URL, id);
         const idClient = document.getElementById("id");
         idClient.disabled = true;
         const name = document.getElementById("name");
@@ -53,24 +51,24 @@ async function setFormClient(id) {
     } catch (error) {
         console.log(error);
     }
-}
+} */
 
 async function sendFormClient() {
     try {
-        const idClient = document.getElementById("id");
-        const name = document.getElementById("name");
-        const email = document.getElementById("email");
-        const age = document.getElementById("age");
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const age = document.getElementById("age").value;
         const client = {
-            id: parseInt(idClient.value),
-            name: name.value,
-            email: email.value,
-            age: parseInt(age.value),
+            name: name,
+            email: email,
+            password: password,
+            age: parseInt(age),
         };
         if (action == "create") {
-            const response = await serviceClient.create(URL, client);
+            await service.create(`${URL}Client/save`, client);
         } else {
-            const response = await serviceClient.update(URL, client);
+            await service.update(`${URL}Client/update`, client);
         }
         location.reload();
     } catch (error) {

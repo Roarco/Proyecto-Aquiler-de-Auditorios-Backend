@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auditorium rental</title>
+    <title>Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="./assets/js/index.js" defer></script>
+    <script src="../assets/js/Service.js" defer></script>
+    <script src="../assets/js/admin.js" defer></script>
 </head>
 
 <body>
@@ -16,14 +17,14 @@
         <div class="row flex-nowrap">
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                    <a href="index.html"
+                    <a href="/"
                         class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         <span class="fs-5 d-none d-sm-inline">Menu</span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                         id="menu">
                         <li class="nav-item">
-                            <a href="pages/audience.html" class="nav-link align-middle px-0" id="audience">
+                            <a href="audience.html" class="nav-link align-middle px-0" id="audience">
                                 <svg id="Layer_3" style="enable-background:new 0 0 64 64;" version="1.1" width="23.72"
                                     height="23.72" fill="currentColor" viewBox="0 0 64 64" xml:space="preserve"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -38,7 +39,7 @@
                             </a>
                         </li>
                         <li class="my-3">
-                            <a href="pages/category.html" class="nav-link px-0 align-middle">
+                            <a href="category.html" class="nav-link px-0 align-middle">
                                 <svg width="23.72" height="23.72" viewBox="0 0 64 64" version="1.1" fill="currentColor"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                     xml:space="preserve" xmlns:serif="http://www.serif.com/"
@@ -86,8 +87,9 @@
                                 </svg><span class="ms-1 d-none d-sm-inline">Categories</span></a>
                         </li>
                         <li class="mb-3">
-                            <a href="pages/client.html" class="nav-link px-0 align-middle">
-                                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="23.72" height="23.72" fill="currentColor">
+                            <a href="client.html" class="nav-link px-0 align-middle">
+                                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="23.72" height="23.72"
+                                    fill="currentColor">
                                     <title />
                                     <g id="about">
                                         <path
@@ -98,7 +100,7 @@
                                 </svg><span class="ms-1 d-none d-sm-inline">Client</span></a>
                         </li>
                         <li class="mb-3">
-                            <a href="pages/message.html" class="nav-link px-0 align-middle">
+                            <a href="message.html" class="nav-link px-0 align-middle">
                                 <svg data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" width="23.72"
                                     height="23.72" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <title />
@@ -109,7 +111,7 @@
                                 </svg></i> <span class="ms-1 d-none d-sm-inline">Message</span> </a>
                         </li>
                         <li class="mb-3">
-                            <a href="pages/reservation.html" class="nav-link px-0 align-middle">
+                            <a href="reservation.html" class="nav-link px-0 align-middle">
                                 <svg id="calendar-date-appontment-booking-reservation" width="23.72" height="23.72"
                                     fill="currentColor" style="enable-background:new 0 0 15 15.5;" version="1.1"
                                     viewBox="0 0 15 15.5" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +121,7 @@
                                 </svg></i> <span class="ms-1 d-none d-sm-inline">Reservation</span> </a>
                         </li>
                         <li class="mb-3">
-                            <a href="pages/admin.html" class="nav-link px-0 align-middle">
+                            <a href="admin.html" class="nav-link px-0 align-middle">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="23.72" height="23.72"
                                     fill="currentColor">
                                     <g>
@@ -131,7 +133,7 @@
                                 <span class="ms-1 d-none d-sm-inline">Admin</span> </a>
                         </li>
                         <li class="mb-3">
-                            <a href="pages/score.html" class="nav-link px-0 align-middle">
+                            <a href="score.html" class="nav-link px-0 align-middle">
                                 <svg id="Layer_1_1_" style="enable-background:new 0 0 64 64;" version="1.1"
                                     width="23.72" height="23.72" fill="currentColor" viewBox="0 0 64 64"
                                     xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -154,10 +156,38 @@
                     <hr>
                 </div>
             </div>
-            <!--             <div class="col py-3 bg-primary d-flex justify-content-center align-items-center text-light" id="welcome">
-                <h1 class="txt-center">Welcome to the website for Auditorium Rental</h1>
-            </div> -->
             <div class="col py-3" id="main">
+                <div class="container-fluid">
+                    <form id="formAudience">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password">
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="sendFormAdmin()">Submit</button>
+                    </form>
+                </div>
+                <div class="container-fluid">
+                    <table class="table mt-5">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

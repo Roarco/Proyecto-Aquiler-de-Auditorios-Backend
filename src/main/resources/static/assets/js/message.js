@@ -1,17 +1,37 @@
-const URL =
-    "https://g809461e5a992bc-pudgjcmoed3aisa4.adb.sa-vinhedo-1.oraclecloudapps.com/ords/admin/";
-const serviceMessage = new ServiceMessage();
+const URL = "http://localhost:8080/api/";
+const service = new Service();
 let action = "create";
 
 (async function () {
     try{
-        const data = await serviceMessage.getall(URL);
+        const clients = await service.getall(`${URL}Client/all`);
+        const selectClient = document.getElementById("client");
+
+        const audiences = await service.getall(`${URL}Audience/all`);
+        const selectAudience = document.getElementById("audien");
+
+        clients.forEach(client => {
+            const option = document.createElement("option");
+            option.value = client.idClient;
+            option.innerHTML = client.name;
+            selectClient.appendChild(option);
+        });
+
+        audiences.forEach(audience => {
+            const option = document.createElement("option");
+            option.value = audience.id;
+            option.innerHTML = audience.name;
+            selectAudience.appendChild(option);
+        });
+
+        const data = await service.getall(`${URL}Message/all`);
         const tbody = document.querySelector("tbody");
         data.forEach((element) => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
-            <th scope="row">${element.id}</th>
-            <td>${element.messagetext}</td>
+            <td>${element.messageText}</td>
+            <td>${element.client.name}</td>
+            <td>${element.audience.name}</td>
             <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormMessage(${element.id})" >
             Edit
             </button></td>
@@ -26,18 +46,18 @@ let action = "create";
     }
 })();
 
-async function deleteMessage(id) {
+/* async function deleteMessage(id) {
     try {
-        const response = await serviceMessage.delete(URL, id);
+        const response = await service.delete(URL, id);
         location.reload();
     } catch (error) {
         console.log(error);
     }
 }
-
-async function setFormMessage(id) {
+ */
+/* async function setFormMessage(id) {
     try {
-        const messageData = await serviceMessage.getbyid(URL, id);
+        const messageData = await service.getbyid(URL, id);
         const idMessage = document.getElementById("id");
         idMessage.disabled = true;
         const message = document.getElementById("messagetext");
@@ -47,20 +67,27 @@ async function setFormMessage(id) {
     } catch (error) {
         console.log(error);
     }
-}
+} */
 
 async function sendFormMessage() {
     try {
-        const idMessage = document.getElementById("id");
-        const message = document.getElementById("messagetext");
+        const message = document.getElementById("message").value;
+        const clientData = document.getElementById("client").value;
+        const audienceData = document.getElementById("audien").value;
+
         const messageData = {
-            id: idMessage.value,
-            messagetext: message.value,
+            messageText: message,
+            client: {
+                idClient: parseInt(clientData)
+            },
+            audience: {
+                id: parseInt(audienceData)
+            }
         };
         if (action == "create") {
-            const response = await serviceMessage.create(URL, messageData);
+            await service.create(`${URL}Message/save`, messageData);
         } else {
-            const response = await serviceMessage.update(URL, messageData);
+            await service.update(`${URL}Message/update`, messageData);
         }
         location.reload();
     } catch (error) {
