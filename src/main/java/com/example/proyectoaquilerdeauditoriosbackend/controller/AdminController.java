@@ -16,12 +16,12 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Admin> getAllAdmins(){
         return adminService.getAllAdmins();
     }
 
-    @PostMapping
+    @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveAdmin(@RequestBody Admin admin){
         adminService.saveAdmin(admin);
