@@ -27,14 +27,11 @@ public class ReservationService {
     public Reservation saveReservation(Reservation reservation) {
         if (reservation.getIdReservation() == null){
             if (reservation.getStartDate() != null && reservation.getDevolutionDate() != null){
-                //validamos con una expresion regular que el formato de la fecha sea correcto 'yyyy-MM-dd'
-                if (reservation.getStartDate().matches("[0-9]{4}-[0-9]{2}-[0-9]{2}") && reservation.getDevolutionDate().matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")){
                     if (reservation.getAudience().getId() instanceof Integer && reservation.getClient().getIdClient() instanceof Integer){
                         //le asignamos el status 'created' a la reserva
                         reservation.setStatus("created");
                         return reservationRepository.save(reservation);
                     }
-                }
             }
         }
         return reservation;
