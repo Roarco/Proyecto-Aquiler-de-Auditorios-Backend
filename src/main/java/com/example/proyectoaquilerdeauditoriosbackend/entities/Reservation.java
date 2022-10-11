@@ -33,6 +33,6 @@ public class Reservation {
 
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "reservation")
     @JsonIgnoreProperties({"reservation"})
-    private List<Score> scores;
+    private List<Score> score;
 
 }

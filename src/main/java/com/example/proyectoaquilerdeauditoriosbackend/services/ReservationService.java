@@ -14,7 +14,15 @@ public class ReservationService {
     private ReservationRepository reservationRepository;
 
     public List<Reservation> getAllReservations() {
-        return reservationRepository.getAll();
+        //return reservationRepository.getAll();
+        //validamos que venga un score en la lista y si no viene lo creamos lo ponemos como null
+        List<Reservation> reservations = reservationRepository.getAll();
+        for (Reservation reservation : reservations) {
+            if (reservation.getScore().isEmpty()) {
+                reservation.setScore(null);
+            }
+        }
+        return reservations;
     }
 
     public Reservation saveReservation(Reservation reservation) {
