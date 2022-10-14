@@ -24,4 +24,8 @@ public class AdminRepository {
     public Admin saveAdmin(Admin admin) {
         return adminCrudRepository.save(admin);
     }
+
+    public void deleteAdmin(Admin admin) {
+        adminCrudRepository.delete(admin);
+    }
 }
