@@ -25,4 +25,10 @@ public class AudienceController {
     public void saveAudience(@RequestBody Audience audience){
         audienceService.saveAudience(audience);
     }
+
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void updateAudience(@RequestBody Audience audience){
+        audienceService.updateAudience(audience);
+    }
 }
