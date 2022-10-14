@@ -25,4 +25,10 @@ public class ReservationController {
      public void saveReservation(@RequestBody Reservation reservation){
           reservationService.saveReservation(reservation);
      }
+
+     @PutMapping("/update")
+     @ResponseStatus(HttpStatus.CREATED)
+     public void updateReservation(@RequestBody Reservation reservation){
+          reservationService.updateReservation(reservation);
+     }
 }
