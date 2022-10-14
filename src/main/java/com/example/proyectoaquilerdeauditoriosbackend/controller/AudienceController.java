@@ -31,4 +31,10 @@ public class AudienceController {
     public void updateAudience(@RequestBody Audience audience){
         audienceService.updateAudience(audience);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAudience(@PathVariable("id") int id){
+        audienceService.deleteAudience(id);
+    }
 }

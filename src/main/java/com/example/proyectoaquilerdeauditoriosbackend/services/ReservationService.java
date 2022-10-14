@@ -65,4 +65,12 @@ public class ReservationService {
             return reservation;
         }
     }
+
+    public boolean deleteReservation(int idReservation) {
+        Boolean aBoolean = getReservation(idReservation).map(reservation -> {
+            reservationRepository.delete(reservation);
+            return true;
+        }).orElse(false);
+        return aBoolean;
+    }
 }
