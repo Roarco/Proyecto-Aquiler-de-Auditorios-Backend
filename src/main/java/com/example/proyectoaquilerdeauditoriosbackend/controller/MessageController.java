@@ -26,4 +26,10 @@ public class MessageController {
     public void saveMessage(@RequestBody Message message){
         messageService.saveMessage(message);
     }
+
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void updateMessage(@RequestBody Message message){
+        messageService.updateMessage(message);
+    }
 }
