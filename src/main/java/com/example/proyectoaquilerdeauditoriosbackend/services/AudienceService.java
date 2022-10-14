@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AudienceService {
@@ -28,5 +29,39 @@ public class AudienceService {
             }
         }
         return audience;
+    }
+
+
+    public Optional<Audience> getAudience(int id) {
+        return audienceRepository.getAudience(id);
+    }
+
+    public Audience updateAudience(Audience audience) {
+        if (audience.getId() != null) {
+            Optional<Audience> audienceOptional = audienceRepository.getAudience(audience.getId());
+            if (!audienceOptional.isEmpty()){
+                if (audience.getOwner() != null) {
+                    audienceOptional.get().setOwner(audience.getOwner());
+                }
+                if (audience.getName() != null) {
+                    audienceOptional.get().setName(audience.getName());
+                }
+                if (audience.getCapacity() != null) {
+                    audienceOptional.get().setCapacity(audience.getCapacity());
+                }
+                if (audience.getDescription() != null) {
+                    audienceOptional.get().setDescription(audience.getDescription());
+                }
+                if (audience.getCategory() != null) {
+                    audienceOptional.get().setCategory(audience.getCategory());
+                }
+                audienceRepository.save(audienceOptional.get());
+                return audienceOptional.get();
+            } else {
+                return audience;
+            }
+        } else {
+            return audience;
+        }
     }
 }
