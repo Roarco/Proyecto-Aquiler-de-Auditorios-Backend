@@ -27,4 +27,10 @@ public class AdminController {
     public void saveAdmin(@RequestBody Admin admin){
         adminService.saveAdmin(admin);
     }
+
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void updateAdmin(@RequestBody Admin admin){
+        adminService.updateAdmin(admin);
+    }
 }

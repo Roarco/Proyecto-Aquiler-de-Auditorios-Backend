@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -26,5 +27,27 @@ public class AdminService {
            }
        }
          return admin;
+    }
+
+    public Optional<Admin> getAdmin(int id) {
+        return adminRepository.getAdminById(id);
+    }
+
+    public Admin updateAdmin(Admin admin) {
+        if (admin.getId() != null){
+            Optional<Admin> e = adminRepository.getAdminById(admin.getId());
+            if (!e.isEmpty()){
+                if(admin.getPassword().length() <= 45  && admin.getName().length() <= 250){
+                    e.get().setPassword(admin.getPassword());
+                    e.get().setName(admin.getName());
+                }
+                adminRepository.saveAdmin(e.get());
+                return e.get();
+            }else {
+                return admin;
+            }
+        }else {
+            return admin;
+        }
     }
 }
