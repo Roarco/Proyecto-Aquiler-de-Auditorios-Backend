@@ -26,4 +26,10 @@ public class ScoreController {
     public void saveScore(@RequestBody Score score){
         scoreService.saveScore(score);
     }
+
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void updateScore(@RequestBody Score score){
+        scoreService.updateScore(score);
+    }
 }
