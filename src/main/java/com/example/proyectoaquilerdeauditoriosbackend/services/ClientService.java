@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientService {
@@ -26,5 +27,34 @@ public class ClientService {
             }
         }
         return client;
+    }
+
+    public Optional<Client> getClient(int idClient) {
+        return clientRepository.getClient(idClient);
+    }
+
+
+
+    public Client updateClient(Client client) {
+        if (client.getIdClient() != null) {
+            Optional<Client> clientOptional = clientRepository.getClient(client.getIdClient());
+            if (!clientOptional.isEmpty()) {
+                if (client.getPassword() != null && client.getPassword().length() <= 45) {
+                    clientOptional.get().setPassword(client.getPassword());
+                }
+                if (client.getName() != null && client.getName().length() <= 250) {
+                    clientOptional.get().setName(client.getName());
+                }
+                if (client.getAge() != null && client.getAge() instanceof Integer) {
+                    clientOptional.get().setAge(client.getAge());
+                }
+                clientRepository.save(clientOptional.get());
+                return clientOptional.get();
+            } else {
+                return client;
+            }
+        } else {
+            return client;
+        }
     }
 }
