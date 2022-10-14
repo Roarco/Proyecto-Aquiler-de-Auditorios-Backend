@@ -64,4 +64,12 @@ public class AudienceService {
             return audience;
         }
     }
+
+    public boolean deleteAudience(int id) {
+        Boolean aBoolean = getAudience(id).map(audience -> {
+            audienceRepository.delete(audience);
+            return true;
+        }).orElse(false);
+        return aBoolean;
+    }
 }

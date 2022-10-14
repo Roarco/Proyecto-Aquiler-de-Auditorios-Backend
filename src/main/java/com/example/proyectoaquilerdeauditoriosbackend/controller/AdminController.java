@@ -33,4 +33,10 @@ public class AdminController {
     public void updateAdmin(@RequestBody Admin admin){
         adminService.updateAdmin(admin);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAdmin(@PathVariable("id") int id){
+        adminService.deleteAdmin(id);
+    }
 }
