@@ -1,6 +1,9 @@
+const btn = document.getElementById("btn");
 const URL = "http://localhost:8080/api/";
+//const URL = "http://193.123.118.88/api/";
 const service = new Service();
 let action = "create";
+let idClient = 0;
 
 (async function () {
     try {
@@ -12,10 +15,10 @@ let action = "create";
             <td>${element.name}</td>
             <td>${element.email}</td>
             <td>${element.age}</td>
-            <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormClient(${element.id})" >
+            <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormClient(${element.idClient})" >
             Edit
             </button></td>
-            <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="deleteClient(${element.id})">
+            <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="deleteClient(${element.idClient})">
             Delete
             </button></td>
             `;
@@ -26,32 +29,29 @@ let action = "create";
     }
 })();
 
-/* async function deleteClient(id) {
+async function deleteClient(id) {
     try {
-        const response = await service.delete(URL, id);
+        await service.delete(`${URL}Client/${id}`);
         location.reload();
     } catch (error) {
         console.log(error);
     }
-} */
+}
 
-/* async function setFormClient(id) {
+async function setFormClient(id) {
     try {
-        const client = await service.getbyid(URL, id);
-        const idClient = document.getElementById("id");
-        idClient.disabled = true;
-        const name = document.getElementById("name");
-        const email = document.getElementById("email");
-        const age = document.getElementById("age");
-        idClient.value = client[0].id;
-        name.value = client[0].name;
-        email.value = client[0].email;
-        age.value = client[0].age;
+        const client = await service.getbyId(`${URL}Client/`, id);
+        document.getElementById("name").value = client.name;
+        document.getElementById("email").style.display = "none";
+        document.getElementById("labelEmail").style.display = "none";
+        document.getElementById("password").value = client.password;
+        document.getElementById("age").value = client.age;
         action = "update";
+        idClient = id;
     } catch (error) {
         console.log(error);
     }
-} */
+}
 
 async function sendFormClient() {
     try {
@@ -65,13 +65,37 @@ async function sendFormClient() {
             password: password,
             age: parseInt(age),
         };
-        if (action == "create") {
-            await service.create(`${URL}Client/save`, client);
-        } else {
-            await service.update(`${URL}Client/update`, client);
-        }
+        await service.create(`${URL}Client/save`, client);
         location.reload();
     } catch (error) {
         console.log(error);
     }
 }
+
+async function updateClient(id) {
+    try {
+        const name = document.getElementById("name").value;
+        const age = document.getElementById("age").value;
+        const password = document.getElementById("password").value;
+
+        const client = {
+            idClient: id,
+            name: name,
+            age: parseInt(age),
+            password: password,
+        };
+        await service.update(`${URL}Client/update`, client);
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+btn.addEventListener("click", function () {
+    if (action === "create") {
+        sendFormClient();
+    }
+    if (action === "update") {
+        updateClient(idClient);
+    }
+});

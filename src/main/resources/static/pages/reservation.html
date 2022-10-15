@@ -168,14 +168,22 @@
                             <input type="date" class="form-control" id="devolutionDate">
                         </div>
                         <div class="mb-3">
-                            <label for="client" class="form-label">Client</label>
+                            <label for="client" class="form-label" id="labelClient">Client</label>
                             <select class="form-select form-select-sm" name="client" id="client"></select>
                         </div>
                         <div class="mb-3">
-                            <label for="audien" class="form-label">Audience</label>
+                            <label for="audien" class="form-label" id="labelAudience">Audience</label>
                             <select class="form-select form-select-sm" name="audien" id="audien"></select>
                         </div>
-                        <button type="button" class="btn btn-success" onclick="sendFormReservation()">Submit</button>
+                        <div class="mb-3" id="intpStatus">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select form-select-sm" name="status" id="status">
+                                <option value="Programado">Programado</option>
+                                <option value="Cancelado">Cancelado</option>
+                                <option value="Realizado">Realizado</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-success" id="btn">Submit</button>
                     </form>
                 </div>
                 <div class="container-fluid">

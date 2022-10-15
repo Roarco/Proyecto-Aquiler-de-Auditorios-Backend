@@ -22,6 +22,11 @@ public class AdminController {
         return adminService.getAllAdmins();
     }
 
+    @GetMapping("/{id}")
+    public Admin getAdminId(@PathVariable("id") int id){
+       return adminService.getAdmin(id).get();
+    }
+
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveAdmin(@RequestBody Admin admin){

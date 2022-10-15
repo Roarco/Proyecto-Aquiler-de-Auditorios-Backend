@@ -1,6 +1,9 @@
+const btn = document.getElementById("btn");
 const URL = "http://localhost:8080/api/";
+//const URL = "http://193.123.118.88/api/";
 const service = new Service();
 let action = "create";
+let idScore = 0;
 
 (async function () {
     try {
@@ -22,7 +25,7 @@ let action = "create";
         <td>${element.reservation.audience.name}</td>
         <td>${element.score}</td>
         <td>${element.message}</td>
-        <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormMessage(${element.id})" >
+        <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormScore(${element.id})" >
         Edit
         </button></td>
         <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="deleteMessage(${element.id})">
@@ -49,14 +52,59 @@ async function sendFormScore() {
                 idReservation: reservation
             }
         };
-
-        if (action === "create") {
-            await service.create(`${URL}Score/save`, Score);
-        } else {
-            await service.update(`${URL}Score/update`, Score);
-        }
+        await service.create(`${URL}Score/save`, Score);
         location.reload();
     } catch (error) {
         console.log(error);
     }
 }
+
+async function deleteMessage(id) {
+    try {
+        await service.delete(`${URL}Score/${id}`);
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function setFormScore(id) {
+    try {
+        const score = await service.getbyId(`${URL}Score/`, id);
+        document.getElementById("score").value = score.score;
+        document.getElementById("message").value = score.message;
+        document.getElementById("reservation").style.display = "none";
+        document.getElementById("labelReservation").style.display = "none";
+        action = "update";
+        idScore = id;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function updateScore(id) {
+    try {
+        const score = document.getElementById("score").value;
+        const message = document.getElementById("message").value;
+
+        const Score = {
+            id: id,
+            score: score,
+            message: message
+        };
+        await service.update(`${URL}Score/update`, Score);
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+btn.addEventListener("click", function () {
+    if (action === "create") {
+        sendFormScore();
+    } else {
+        updateScore(idScore);
+    }
+}
+);

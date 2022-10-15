@@ -1,6 +1,9 @@
+const btn = document.getElementById("btn");
 const URL = "http://localhost:8080/api/";
+//const URL = "http://193.123.118.88/api/";
 const service = new Service();
 let action = "create";
+let idAdmin = 0;
 
 
 (async function () {
@@ -36,13 +39,59 @@ async function sendFormAdmin() {
             email: email,
             password: password
         };
-        if (action === "create") {
-            await service.create(`${URL}Admin/save`, admin);
-        } else {
-            await service.update(`${URL}Admin/update`, admin);
-        }
+        await service.create(`${URL}Admin/save`, admin);
         location.reload();
     } catch (error) {
         console.log(error);
     }
 }
+
+async function deleteAdmin(id) {
+    try {
+        await service.delete(`${URL}Admin/${id}`);
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function setFormAdmin(id) {
+    try {
+        const admin = await service.getbyId(`${URL}Admin/`, id);
+        document.getElementById("name").value = admin.name;
+        document.getElementById("email").style.display = "none";
+        document.getElementById("labelEmail").style.display = "none";
+        document.getElementById("password").value = admin.password;
+        action = "update";
+        idAdmin = id;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function updateAdmin(id) {
+    try {
+        const name = document.getElementById("name").value;
+        const password = document.getElementById("password").value;
+
+        const admin = {
+            id: id,
+            name: name,
+            password: password
+        };
+        await service.update(`${URL}Admin/update`, admin);
+        location.reload();
+    }catch (error) {
+            console.log(error);
+        }
+    }
+
+
+btn.addEventListener("click", function () {
+        if (action === "create") {
+            sendFormAdmin();
+        }
+        if (action === "update") {
+            updateAdmin(idAdmin);
+        }
+    });

@@ -21,6 +21,11 @@ public class ClientController {
         return clientService.getAllClients();
     }
 
+    @GetMapping("/{id}")
+    public Client getClientId(@PathVariable("id") int id){
+       return clientService.getClient(id).get();
+    }
+
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@RequestBody Client client){
@@ -31,5 +36,11 @@ public class ClientController {
     @ResponseStatus(HttpStatus.CREATED)
     public void update(@RequestBody Client client){
         clientService.updateClient(client);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") int id){
+        clientService.deleteClient(id);
     }
 }
