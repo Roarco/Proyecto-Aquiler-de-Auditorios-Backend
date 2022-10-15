@@ -1,6 +1,8 @@
+const btn = document.getElementById("btn");
 const URL = "http://localhost:8080/api/";
 const service = new Service();
 let action = "create";
+let idMessage = 0;
 
 (async function () {
     try{
@@ -55,19 +57,20 @@ async function deleteMessage(id) {
     }
 }
 
-/* async function setFormMessage(id) {
+async function setFormMessage(id) {
     try {
-        const messageData = await service.getbyid(URL, id);
-        const idMessage = document.getElementById("id");
-        idMessage.disabled = true;
-        const message = document.getElementById("messagetext");
-        idMessage.value = messageData[0].id;
-        message.value = messageData[0].messagetext;
+        const messageData = await service.getbyId(`${URL}Message/`, id);;
+        document.getElementById("message").value = messageData.messageText;
+        document.getElementById("client").style.display = "none";
+        document.getElementById("audien").style.display = "none";
+        document.getElementById("labelClient").style.display = "none";
+        document.getElementById("labelAudience").style.display = "none";
         action = "update";
+        idMessage = id;
     } catch (error) {
         console.log(error);
     }
-} */
+}
 
 async function sendFormMessage() {
     try {
@@ -84,13 +87,32 @@ async function sendFormMessage() {
                 id: parseInt(audienceData)
             }
         };
-        if (action == "create") {
-            await service.create(`${URL}Message/save`, messageData);
-        } else {
-            await service.update(`${URL}Message/update`, messageData);
-        }
+        await service.create(`${URL}Message/save`, messageData);
         location.reload();
     } catch (error) {
         console.log(error);
     }
 }
+
+async function updateMessage(id) {
+    try {
+        const message = document.getElementById("message").value;
+        const messageData = {
+            idMessage: id,
+            messageText: message,
+        };
+        await service.update(`${URL}Message/update`, messageData);
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+btn.addEventListener("click", function () {
+    if (action === "create") {
+        sendFormMessage();
+    }
+    if (action === "update") {
+        updateMessage(idMessage);
+    }
+});
