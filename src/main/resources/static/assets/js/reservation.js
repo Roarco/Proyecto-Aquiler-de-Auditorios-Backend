@@ -1,10 +1,14 @@
+const btn = document.getElementById("btn");
 const URL = "http://localhost:8080/api/";
 const service = new Service();
 let action = "create";
+let idReservation = 0;
 
 (async function () {
 
     try {
+        document.getElementById("intpStatus").style.display = "none";
+
         const clients = await service.getall(`${URL}Client/all`);
         const selectClient = document.getElementById("client");
 
@@ -62,13 +66,7 @@ async function sendFormReservation() {
             client: { idClient: client },
             audience: { id: audience }
         }
-
-        if (action === "create") {
-            await service.create(`${URL}Reservation/save`, Reservation);
-        }
-        if (action === "update") {
-            await service.update(`${URL}Reservation/save`, Reservation);
-        }
+        await service.create(`${URL}Reservation/save`, Reservation);
         location.reload();
     } catch (error) {
         console.log(error);
@@ -83,3 +81,48 @@ async function deleteReservation(id) {
         console.log(error);
     }
 }
+
+async function setReservation(id) {
+    try {
+        const reservation = await service.getbyId(`${URL}Reservation/`, id);
+        document.getElementById("startDate").value = reservation.startDate.split("T")[0];
+        document.getElementById("devolutionDate").value = reservation.devolutionDate.split("T")[0];
+        document.getElementById("intpStatus").style.display = "block";
+        document.getElementById("client").style.display = "none";
+        document.getElementById("audien").style.display = "none";
+        document.getElementById("labelClient").style.display = "none";
+        document.getElementById("labelAudience").style.display = "none";
+        action = "update";
+        idReservation = id;
+    }catch (error) {
+        console.log(error);
+    }
+}
+
+async function updateReservation(id) {
+    try {
+        const startDate = document.getElementById("startDate").value;
+        const devolutionDate = document.getElementById("devolutionDate").value;
+        const status = document.getElementById("status").value;
+
+        const Reservation = {
+            idReservation: id,
+            startDate: startDate,
+            devolutionDate: devolutionDate,
+            status: status
+        }
+        await service.update(`${URL}Reservation/update`, Reservation);
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+btn.addEventListener("click", function () {
+    if (action === "create") {
+        sendFormReservation();
+    }
+    if (action === "update") {
+        updateReservation(idReservation);
+    }
+});
