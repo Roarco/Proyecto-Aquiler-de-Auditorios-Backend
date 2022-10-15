@@ -1,6 +1,8 @@
+const btn = document.getElementById("btn");
 const URL = "http://localhost:8080/api/";
 const service = new Service();
 let action = "create";
+let idCategory = 0;
 
 (async function () {
     try {
@@ -11,7 +13,7 @@ let action = "create";
             tr.innerHTML = `
         <td>${element.name}</td>
         <td>${element.description}</td>
-        <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setForm(${element.id})" >
+        <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormCategory(${element.id})" >
         Edit
         </button></td>
         <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="deleteCategory(${element.id})">
@@ -25,7 +27,7 @@ let action = "create";
     }
 }());
 
-async function sendFormCategory() {
+async function saveFormCategory() {
     try {
     const name = document.getElementById("name").value;
     const description = document.getElementById("description").value;
@@ -34,15 +36,8 @@ async function sendFormCategory() {
         name: name,
         description: description,
     }
-
-    if (action === "create") {
-        await service.create(`${URL}Category/save`, data);
-    }
-    if (action === "update") {
-        await service.update(`${URL}Category/update`, data);
-    }
+    await service.create(`${URL}Category/save`, data);
     location.reload();
-
     } catch (error) {
         console.log(error);
     }
@@ -56,3 +51,43 @@ async function deleteCategory(id) {
         console.log(error);
     }
 }
+
+async function setFormCategory(id) {
+    try {
+        const category = await service.getbyId(`${URL}Category/`, id);
+        document.getElementById("name").value = category.name;
+        document.getElementById("description").value = category.description;
+        action = "update";
+        idCategory = category.id;
+    }catch (error) {
+        console.log(error);
+    }
+}
+
+async function updateCategory(id) {
+    try {
+        const name = document.getElementById("name").value;
+        const description = document.getElementById("description").value;
+
+        const data = {
+            id: id,
+            name: name,
+            description: description,
+        }
+
+        await service.update(`${URL}Category/update`, data);
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+btn.addEventListener("click", function () {
+    if (action === "create") {
+        saveFormCategory();
+    }
+    if (action === "update") {
+        updateCategory(idCategory);
+    }
+});

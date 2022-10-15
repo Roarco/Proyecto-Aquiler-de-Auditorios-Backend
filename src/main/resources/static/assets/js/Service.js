@@ -7,7 +7,7 @@ class Service {
         return data;
     }
 
-    async getbyid(url, id){
+    async getbyId(url, id){
         const response = await fetch(url + id);
         const data = await response.json();
         return data;
@@ -25,6 +25,7 @@ class Service {
     }
 
     async update(url, data){
+        console.log(data);
         const response = await fetch(url, {
             method: 'PUT',
             body: JSON.stringify(data),
