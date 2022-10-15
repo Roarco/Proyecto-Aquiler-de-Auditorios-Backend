@@ -21,6 +21,11 @@ public class ClientController {
         return clientService.getAllClients();
     }
 
+    @GetMapping("/{id}")
+    public Client getClientId(@PathVariable("id") int id){
+       return clientService.getClient(id).get();
+    }
+
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@RequestBody Client client){

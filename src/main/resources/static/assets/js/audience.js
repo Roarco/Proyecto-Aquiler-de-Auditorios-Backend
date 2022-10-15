@@ -85,13 +85,7 @@ async function sendFormAudience() {
             description: description
         };
 
-        if (action === "create") {
-            await service.create(`${URL}Audience/save`, audience);
-        }
-        if (action === "update") {
-            await service.update(`${URL}Audience/update`, audience);
-        }
-
+        await service.create(`${URL}Audience/save`, audience);
         location.reload();
     } catch (error) {
         console.log(error);
