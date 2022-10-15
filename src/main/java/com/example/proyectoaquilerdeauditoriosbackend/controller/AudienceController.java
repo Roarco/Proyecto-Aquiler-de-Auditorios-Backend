@@ -20,6 +20,11 @@ public class AudienceController {
     public List<Audience> getAllAudiences(){
         return audienceService.getAllAudiences();
     }
+
+    @GetMapping("/{id}")
+    public Audience getAudienceId(@PathVariable("id") int id){
+       return audienceService.getAudience(id).get();
+    }
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveAudience(@RequestBody Audience audience){

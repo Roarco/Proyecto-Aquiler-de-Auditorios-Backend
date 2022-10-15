@@ -1,6 +1,8 @@
+const btn = document.getElementById("btn");
 const URL = "http://localhost:8080/api/";
 const service = new Service();
 let action = "create";
+let idAudience = 0;
 
 (async function () {
     try {
@@ -49,29 +51,22 @@ async function deleteAudience(id) {
     }
 }
 
-//creamos una funcion para setear los datos del formulario
-/* async function setFormAudience(id) {
+async function setFormAudience(id) {
     try {
-        const audience = await serviceAudience.getbyid(URL, id);
-        const idAudience = document.getElementById("id");
-        idAudience.disabled = true;
-        const owner = document.getElementById("owner");
-        const capacity = document.getElementById("capacity");
-        const category_id = document.getElementById("category_id");
-        const name = document.getElementById("name");
-        idAudience.value = audience[0].id;
-        owner.value = audience[0].owner;
-        capacity.value = audience[0].capacity;
-        category_id.value = audience[0].category_id;
-        name.value = audience[0].name;
-
+        const audience = await service.getbyId(`${URL}Audience/`, id);
+        document.getElementById("name").value = audience.name;
+        document.getElementById("owner").value = audience.owner;
+        document.getElementById("capacity").value = audience.capacity;
+        document.getElementById("description").value = audience.description;
+        document.getElementById("category").style.display = "none";
+        document.getElementById("labelCategory").style.display = "none";
         action = "update";
+        idAudience = audience.id;
     } catch (error) {
         console.log(error);
     }
-} */
+}
 
-//creamos una funcion para enviar los datos del formulario
 async function sendFormAudience() {
     try {
         const name = document.getElementById("name").value;
@@ -102,4 +97,35 @@ async function sendFormAudience() {
         console.log(error);
     }
 }
+
+async function  updateAudience(id) {
+    try {
+        const name = document.getElementById("name").value;
+        const owner = document.getElementById("owner").value;
+        const capacity = document.getElementById("capacity").value;
+        const description = document.getElementById("description").value;
+
+        const audience = {
+            id: id,
+            name: name,
+            owner: owner,
+            capacity: capacity,
+            description: description
+        };
+
+        await service.update(`${URL}Audience/update`, audience);
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+btn.addEventListener("click", function () {
+    if (action === "create") {
+        sendFormAudience();
+    }
+    if (action === "update") {
+        updateAudience(idAudience);
+    }
+});
 
