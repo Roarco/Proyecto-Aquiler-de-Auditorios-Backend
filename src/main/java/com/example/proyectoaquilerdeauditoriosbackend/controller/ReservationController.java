@@ -20,6 +20,12 @@ public class ReservationController {
          return reservationService.getAllReservations();
      }
 
+     @GetMapping("/{id}")
+     public Reservation getReservationId(@PathVariable("id") int id){
+          return reservationService.getReservation(id).get();
+     }
+
+
      @PostMapping("/save")
      @ResponseStatus(HttpStatus.CREATED)
      public void saveReservation(@RequestBody Reservation reservation){

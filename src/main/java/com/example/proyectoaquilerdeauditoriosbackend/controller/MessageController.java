@@ -21,6 +21,11 @@ public class MessageController {
         return messageService.getAllMessages();
     }
 
+    @GetMapping("/{id}")
+    public Message getMessageId(@PathVariable("id") int id){
+       return messageService.getMessage(id).get();
+    }
+
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveMessage(@RequestBody Message message){

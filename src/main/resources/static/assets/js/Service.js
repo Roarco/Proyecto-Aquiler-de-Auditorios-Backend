@@ -7,7 +7,7 @@ class Service {
         return data;
     }
 
-    async getbyid(url, id){
+    async getbyId(url, id){
         const response = await fetch(url + id);
         const data = await response.json();
         return data;
@@ -35,13 +35,9 @@ class Service {
         return response;
     }
 
-    async delete(url, id){
-        const data = {
-            id: id
-        }
+    async delete(url){
         const response = await fetch(url, {
             method: 'DELETE',
-            body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json'
             }
