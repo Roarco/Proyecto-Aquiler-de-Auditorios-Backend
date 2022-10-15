@@ -1,6 +1,8 @@
+const btn = document.getElementById("btn");
 const URL = "http://localhost:8080/api/";
 const service = new Service();
 let action = "create";
+let idScore = 0;
 
 (async function () {
     try {
@@ -49,12 +51,7 @@ async function sendFormScore() {
                 idReservation: reservation
             }
         };
-
-        if (action === "create") {
-            await service.create(`${URL}Score/save`, Score);
-        } else {
-            await service.update(`${URL}Score/update`, Score);
-        }
+        await service.create(`${URL}Score/save`, Score);
         location.reload();
     } catch (error) {
         console.log(error);
@@ -69,3 +66,44 @@ async function deleteMessage(id) {
         console.log(error);
     }
 }
+
+async function setFormScore(id) {
+    try {
+        const score = await service.getbyId(`${URL}Score/`, id);
+        document.getElementById("score").value = score.score;
+        document.getElementById("message").value = score.message;
+        document.getElementById("reservation").style.display = "none";
+        document.getElementById("labelReservation").style.display = "none";
+        action = "update";
+        idScore = id;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function updateScore(id) {
+    try {
+        const score = document.getElementById("score").value;
+        const message = document.getElementById("message").value;
+
+        const Score = {
+            id: id,
+            score: score,
+            message: message
+        };
+        await service.update(`${URL}Score/update`, Score);
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+btn.addEventListener("click", function () {
+    if (action === "create") {
+        sendFormScore();
+    } else {
+        updateScore(idScore);
+    }
+}
+);

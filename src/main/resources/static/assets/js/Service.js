@@ -25,7 +25,6 @@ class Service {
     }
 
     async update(url, data){
-        console.log(data);
         const response = await fetch(url, {
             method: 'PUT',
             body: JSON.stringify(data),

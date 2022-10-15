@@ -21,6 +21,11 @@ public class ScoreController {
         return scoreService.getAllScores();
     }
 
+    @GetMapping("/{id}")
+    public Score getScoreId(@PathVariable("id") int id){
+       return scoreService.getScore(id).get();
+    }
+
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveScore(@RequestBody Score score){
