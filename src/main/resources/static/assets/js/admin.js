@@ -46,3 +46,12 @@ async function sendFormAdmin() {
         console.log(error);
     }
 }
+
+async function deleteAdmin(id) {
+    try {
+        await service.delete(`${URL}Admin/${id}`);
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}

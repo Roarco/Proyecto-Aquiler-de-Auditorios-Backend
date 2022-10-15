@@ -12,10 +12,10 @@ let action = "create";
             <td>${element.name}</td>
             <td>${element.email}</td>
             <td>${element.age}</td>
-            <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormClient(${element.id})" >
+            <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormClient(${element.idClient})" >
             Edit
             </button></td>
-            <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="deleteClient(${element.id})">
+            <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="deleteClient(${element.idClient})">
             Delete
             </button></td>
             `;
@@ -26,14 +26,14 @@ let action = "create";
     }
 })();
 
-/* async function deleteClient(id) {
+async function deleteClient(id) {
     try {
-        const response = await service.delete(URL, id);
+        await service.delete(`${URL}Client/${id}`);
         location.reload();
     } catch (error) {
         console.log(error);
     }
-} */
+}
 
 /* async function setFormClient(id) {
     try {

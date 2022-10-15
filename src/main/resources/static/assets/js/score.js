@@ -22,7 +22,7 @@ let action = "create";
         <td>${element.reservation.audience.name}</td>
         <td>${element.score}</td>
         <td>${element.message}</td>
-        <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormMessage(${element.id})" >
+        <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormScore(${element.id})" >
         Edit
         </button></td>
         <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="deleteMessage(${element.id})">
@@ -55,6 +55,15 @@ async function sendFormScore() {
         } else {
             await service.update(`${URL}Score/update`, Score);
         }
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function deleteMessage(id) {
+    try {
+        await service.delete(`${URL}Score/${id}`);
         location.reload();
     } catch (error) {
         console.log(error);

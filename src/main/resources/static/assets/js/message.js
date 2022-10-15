@@ -32,10 +32,10 @@ let action = "create";
             <td>${element.messageText}</td>
             <td>${element.client.name}</td>
             <td>${element.audience.name}</td>
-            <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormMessage(${element.id})" >
+            <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormMessage(${element.idMessage})" >
             Edit
             </button></td>
-            <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="deleteMessage(${element.id})">
+            <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="deleteMessage(${element.idMessage})">
             Delete
             </button></td>
             `;
@@ -46,15 +46,15 @@ let action = "create";
     }
 })();
 
-/* async function deleteMessage(id) {
+async function deleteMessage(id) {
     try {
-        const response = await service.delete(URL, id);
+        await service.delete(`${URL}Message/${id}`);
         location.reload();
     } catch (error) {
         console.log(error);
     }
 }
- */
+
 /* async function setFormMessage(id) {
     try {
         const messageData = await service.getbyid(URL, id);

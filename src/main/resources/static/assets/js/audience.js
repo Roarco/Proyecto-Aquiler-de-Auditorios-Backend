@@ -40,14 +40,14 @@ let action = "create";
     }
 })();
 
-/* async function deleteAudience(id) {
+async function deleteAudience(id) {
     try {
-        const response = await serviceAudience.delete(URL, id);
+        await service.delete(`${URL}Audience/${id}`);
         location.reload();
     } catch (error) {
         console.log(error);
     }
-} */
+}
 
 //creamos una funcion para setear los datos del formulario
 /* async function setFormAudience(id) {

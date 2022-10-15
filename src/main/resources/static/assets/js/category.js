@@ -47,3 +47,12 @@ async function sendFormCategory() {
         console.log(error);
     }
 }
+
+async function deleteCategory(id) {
+    try {
+        await service.delete(`${URL}Category/${id}`);
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}

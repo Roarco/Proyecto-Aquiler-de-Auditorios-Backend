@@ -33,8 +33,6 @@ public class ClientService {
         return clientRepository.getClient(idClient);
     }
 
-
-
     public Client updateClient(Client client) {
         if (client.getIdClient() != null) {
             Optional<Client> clientOptional = clientRepository.getClient(client.getIdClient());
@@ -56,5 +54,13 @@ public class ClientService {
         } else {
             return client;
         }
+    }
+
+    public boolean deleteClient(int idClient) {
+        Boolean aBoolean = getClient(idClient).map(client -> {
+            clientRepository.delete(client);
+            return true;
+        }).orElse(false);
+        return aBoolean;
     }
 }

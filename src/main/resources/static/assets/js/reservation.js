@@ -35,10 +35,10 @@ let action = "create";
         <td>${element.startDate}</td>
         <td>${element.devolutionDate}</td>
         <td>${element.status}</td>
-        <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setFormMessage(${element.id})" >
+        <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setReservation(${element.idReservation})" >
         Edit
         </button></td>
-        <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="deleteMessage(${element.id})">
+        <td> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="deleteReservation(${element.idReservation})">
         Delete
         </button></td>
         `;
@@ -69,6 +69,15 @@ async function sendFormReservation() {
         if (action === "update") {
             await service.update(`${URL}Reservation/save`, Reservation);
         }
+        location.reload();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function deleteReservation(id) {
+    try {
+        await service.delete(`${URL}Reservation/${id}`);
         location.reload();
     } catch (error) {
         console.log(error);

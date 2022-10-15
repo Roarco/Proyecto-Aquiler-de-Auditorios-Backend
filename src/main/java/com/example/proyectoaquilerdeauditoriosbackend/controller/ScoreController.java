@@ -32,4 +32,10 @@ public class ScoreController {
     public void updateScore(@RequestBody Score score){
         scoreService.updateScore(score);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteScore(@PathVariable("id") int id){
+        scoreService.deleteScore(id);
+    }
 }
