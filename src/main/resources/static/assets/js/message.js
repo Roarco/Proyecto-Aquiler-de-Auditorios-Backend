@@ -1,5 +1,6 @@
 const btn = document.getElementById("btn");
 const URL = "http://localhost:8080/api/";
+//const URL = "http://193.123.118.88/api/";
 const service = new Service();
 let action = "create";
 let idMessage = 0;
