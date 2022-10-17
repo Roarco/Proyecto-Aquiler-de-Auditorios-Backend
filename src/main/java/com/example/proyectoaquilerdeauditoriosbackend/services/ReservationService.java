@@ -1,5 +1,7 @@
 package com.example.proyectoaquilerdeauditoriosbackend.services;
 
+import com.example.proyectoaquilerdeauditoriosbackend.entities.CountClient;
+import com.example.proyectoaquilerdeauditoriosbackend.entities.ReportEstatus;
 import com.example.proyectoaquilerdeauditoriosbackend.entities.Reservation;
 import com.example.proyectoaquilerdeauditoriosbackend.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +20,7 @@ public class ReservationService {
     private ReservationRepository reservationRepository;
 
     public List<Reservation> getAllReservations() {
-        //validamos que venga un score en la lista y si no viene lo creamos lo ponemos como null
-        List<Reservation> reservations = reservationRepository.getAll();
-        for (Reservation reservation : reservations) {
-            if (reservation.getScore().isEmpty()) {
-                reservation.setScore(null);
-            }
-        }
-        return reservations;
+        return reservationRepository.getAll();
     }
 
     public Reservation saveReservation(Reservation reservation) {
@@ -94,5 +89,15 @@ public class ReservationService {
         }else {
             return new ArrayList<>();
         }
+    }
+
+    public ReportEstatus getReport(){
+        List<Reservation> completed = reservationRepository.getReservationByStatus("completed");
+        List<Reservation> cancelled = reservationRepository.getReservationByStatus("cancelled");
+        return new ReportEstatus(completed.size(), cancelled.size());
+    }
+
+    public List<CountClient> countTotalReservationsByClient(){
+        return reservationRepository.countTotalReservationsByClient();
     }
 }
