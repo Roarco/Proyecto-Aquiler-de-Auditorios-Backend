@@ -5,6 +5,9 @@ import com.example.proyectoaquilerdeauditoriosbackend.repositories.ReservationRe
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +32,10 @@ public class ReservationService {
         if (reservation.getIdReservation() == null){
             if (reservation.getStartDate() != null && reservation.getDevolutionDate() != null){
                     if (reservation.getAudience().getId() instanceof Integer && reservation.getClient().getIdClient() instanceof Integer){
-                        //le asignamos el status 'created' a la reserva
-                        reservation.setStatus("created");
+                        //validamos que venga un status, si no viene lo ponemos como "created"
+                        if (reservation.getStatus().isEmpty()){
+                            reservation.setStatus("created");
+                        }
                         return reservationRepository.save(reservation);
                     }
             }
@@ -72,5 +77,22 @@ public class ReservationService {
             return true;
         }).orElse(false);
         return aBoolean;
+    }
+
+    public List<Reservation> getReservationByDates(String dateOne, String dateTwo){
+       SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateOneParsed = new Date();
+        Date dateTwoParsed = new Date();
+        try{
+            dateOneParsed = parser.parse(dateOne);
+            dateTwoParsed = parser.parse(dateTwo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if (dateOneParsed.before(dateTwoParsed)){
+            return reservationRepository.getReservationByDates(dateOneParsed, dateTwoParsed);
+        }else {
+            return new ArrayList<>();
+        }
     }
 }
