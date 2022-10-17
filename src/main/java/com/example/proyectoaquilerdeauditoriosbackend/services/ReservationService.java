@@ -1,5 +1,6 @@
 package com.example.proyectoaquilerdeauditoriosbackend.services;
 
+import com.example.proyectoaquilerdeauditoriosbackend.entities.ReportEstatus;
 import com.example.proyectoaquilerdeauditoriosbackend.entities.Reservation;
 import com.example.proyectoaquilerdeauditoriosbackend.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,5 +95,24 @@ public class ReservationService {
         }else {
             return new ArrayList<>();
         }
+    }
+
+    public ReportEstatus getReport(){
+       //me traigo todas las reservaciones
+        List<Reservation> reservations = reservationRepository.getAll();
+        //creo un objeto de tipo ReportEstatus
+        ReportEstatus reportEstatus = new ReportEstatus(0,0);
+        //recorro la lista de reservaciones
+        for (Reservation reservation : reservations) {
+            //si el status es completed
+            if (reservation.getStatus().equals("completed")){
+                //aumento en 1 el contador de completed
+                reportEstatus.setCompleted(reportEstatus.getCompleted()+1);
+            } else if (reservation.getStatus().equals("cancelled")) {
+                //aumento en 1 el contador de cancelled
+                reportEstatus.setCancelled(reportEstatus.getCancelled()+1);
+            }
+        }
+        return reportEstatus;
     }
 }

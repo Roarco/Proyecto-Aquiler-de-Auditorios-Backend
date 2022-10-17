@@ -1,5 +1,6 @@
 package com.example.proyectoaquilerdeauditoriosbackend.controller;
 
+import com.example.proyectoaquilerdeauditoriosbackend.entities.ReportEstatus;
 import com.example.proyectoaquilerdeauditoriosbackend.entities.Reservation;
 import com.example.proyectoaquilerdeauditoriosbackend.services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ public class ReservationController {
      public List<Reservation> getReservationByDates(@PathVariable("dateOne") String dateOne, @PathVariable("dateTwo") String dateTwo){
           return reservationService.getReservationByDates(dateOne, dateTwo);
      }
+
+     @GetMapping("/report-status")
+     public ReportEstatus getReservationStatus(){
+          return reservationService.getReport();
+     }
+
 
 
      @PostMapping("/save")
