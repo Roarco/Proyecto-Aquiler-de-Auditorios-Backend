@@ -32,8 +32,8 @@ public class Reservation {
     @JsonIgnoreProperties({"messages", "reservations"})
     private Client client;
 
-    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "reservation")
-    @JsonIgnoreProperties({"reservation"})
-    private List<Score> score;
+    @OneToOne(cascade = {CascadeType.REMOVE}, mappedBy = "reservation")
+    @JsonIgnoreProperties({"reservation", "client"})
+    private Score score;
 
 }

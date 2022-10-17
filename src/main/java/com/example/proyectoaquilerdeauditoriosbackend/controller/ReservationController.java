@@ -1,5 +1,6 @@
 package com.example.proyectoaquilerdeauditoriosbackend.controller;
 
+import com.example.proyectoaquilerdeauditoriosbackend.entities.CountClient;
 import com.example.proyectoaquilerdeauditoriosbackend.entities.ReportEstatus;
 import com.example.proyectoaquilerdeauditoriosbackend.entities.Reservation;
 import com.example.proyectoaquilerdeauditoriosbackend.services.ReservationService;
@@ -36,7 +37,10 @@ public class ReservationController {
           return reservationService.getReport();
      }
 
-
+     @GetMapping("/report-clients")
+        public List<CountClient> getReservationByClients(){
+            return reservationService.countTotalReservationsByClient();
+        }
 
      @PostMapping("/save")
      @ResponseStatus(HttpStatus.CREATED)
