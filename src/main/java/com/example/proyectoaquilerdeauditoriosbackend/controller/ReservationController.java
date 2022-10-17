@@ -25,6 +25,11 @@ public class ReservationController {
           return reservationService.getReservation(id).get();
      }
 
+     @GetMapping("/report-dates/{dateOne}/{dateTwo}")
+     public List<Reservation> getReservationByDates(@PathVariable("dateOne") String dateOne, @PathVariable("dateTwo") String dateTwo){
+          return reservationService.getReservationByDates(dateOne, dateTwo);
+     }
+
 
      @PostMapping("/save")
      @ResponseStatus(HttpStatus.CREATED)

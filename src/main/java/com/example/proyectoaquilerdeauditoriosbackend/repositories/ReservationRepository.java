@@ -4,6 +4,7 @@ import com.example.proyectoaquilerdeauditoriosbackend.entities.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,5 +28,9 @@ public class ReservationRepository {
 
     public void delete(Reservation reservation) {
         reservationCrudRepository.delete(reservation);
+    }
+
+    public List<Reservation> getReservationByDates(Date dateOne, Date dateTwo) {
+        return reservationCrudRepository.findAllByStartDateAfterAndStartDateBefore(dateOne, dateTwo);
     }
 }

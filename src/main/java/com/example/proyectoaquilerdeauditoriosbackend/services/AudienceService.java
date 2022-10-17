@@ -22,9 +22,7 @@ public class AudienceService {
         if (audience.getId() == null) {
             if (audience.getOwner().length() <= 45 && audience.getName().length() <= 45) {
                 if (audience.getCapacity() instanceof Integer && audience.getDescription().length() <= 250) {
-                    if (audience.getCategory() != null && audience.getCategory().getId() instanceof Integer) {
-                        return audienceRepository.save(audience);
-                    }
+                    return audienceRepository.save(audience);
                 }
             }
         }
